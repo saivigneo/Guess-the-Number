@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Number Guessing Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 style="color: black;margin-left: 8cm ;">Guess The Number</h1>
+  <div id="startButton">
+    <button onclick="startGame()" style="color: black;margin-left: 9cm;margin-top: 0.3cm;width: 3cm;border-radius: 10%;background: linear-gradient(black);border-color: yellowgreen;"><b>Start</b></button>
+  </div>
+  <div id="gameDiv" style="display: none;margin-top: -1%;">
+    <p style="color:black;margin-left: 4cm;"><b>Guess The number</b> </p>
+    <p style="color:black;margin-left: 4cm;"></p>
+  <input type="text" id="guess" style="color: black;margin-left: 4cm;" />
+    <button onclick="checkGuess()" style="width: 3cm;border-radius: 10%;background:  linear-gradient(to right,white);border-color: #7bcbda;"><b>Guess<b></button>
+    <p id="message" style="color: black;margin-left: 4cm;"></p>
+    <p id="lives" style="color: black;margin-left: 4cm;"></p>
+  </div>
+
+  <script>
+    const maxLives = 10;
+let remainingLives = maxLives;
+const randomNumber = Math.floor(Math.random() * 100) + 1;
+let attempts = 0;
+
+function startGame() {
+  document.getElementById('startButton').style.display = 'none';
+  document.getElementById('gameDiv').style.display = 'block';
+  document.getElementById('message').textContent = "";
+  document.getElementById('lives').textContent = "";
+  remainingLives = maxLives;
+  attempts = 0;
+}
+
+function checkGuess() {
+  const guess = parseInt(document.getElementById('guess').value);
+  attempts++;
+
+  if (isNaN(guess) || guess < 1 || guess > 100) {
+    document.getElementById('message').textContent = "Range should be 1 to 100";
+    return;
+  }
+
+  if (guess === randomNumber) {
+    document.getElementById('message').textContent = `🎉🎉 Congratulations! You guessed the number  ${randomNumber} in ${attempts} attempts.`;
+    document.getElementById('lives').textContent = "";
+    return;
+  }
+
+  remainingLives--;
+
+  if (remainingLives === 0) {
+    document.getElementById('message').textContent = `😢😢Game Over! The number was ${randomNumber}.`;
+    document.getElementById('lives').textContent = "";
+    return;
+  }
+
+  document.getElementById('lives').textContent = `Remaining Lives: ${remainingLives}`;
+  document.getElementById('message').textContent = "Do Try again ";
+}
+  </script>
+</body>
+</html>
